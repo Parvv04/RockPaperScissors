@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <link rel="stylesheet" href="styles.css">
+</html>
+</head>
+<script>
+    function getComputerChoice() {
+        const choices = ['rock', 'paper', 'scissors'];
+        const randomIndex = Math.floor(Math.random() * choices.length);
+        return choices[randomIndex];
+    }
+    function getHumanChoice() {
+        const choices = ['rock', 'paper', 'scissors'];
+        let choice;
+        do {
+            choice = prompt("Enter rock, paper, or scissors:").toLowerCase();
+        } while (!choices.includes(choice));
+        return choice;
+    }
+    let humanScore = 0;
+    let computerScore = 0;
+    function playRound(humanChoice, computerChoice) {
+        if (humanChoice === computerChoice) {
+            return 'Its a tie!';
+        } else if (
+            (humanChoice === 'rock' && computerChoice === 'scissors') ||
+            (humanChoice === 'paper' && computerChoice === 'rock') ||
+            (humanChoice === 'scissors' && computerChoice === 'paper')
+        ) {
+            humanScore++;
+            return `Computer Choice: ${computerChoice} \nYour Choice: ${humanChoice} \nYou win!`;
+        } else {
+            computerScore++;
+            return `Computer Choice: ${computerChoice} \nYour Choice: ${humanChoice} \nYou lose!`;
+        }
+    }
+    function playGame() {
+        const rounds = parseInt(prompt("How many rounds would you like to play?"));
+        for (let i = 0; i < rounds; i++) {
+            const humanChoice = getHumanChoice();
+            const computerChoice = getComputerChoice();
+            const result = playRound(humanChoice, computerChoice);
+            alert(result);
+        }
+        if (humanScore > computerScore) {
+            alert(`You win the game! \nFinal score: \nYou: ${humanScore} \nComputer: ${computerScore}`);
+        } else if (computerScore > humanScore) {
+            alert(`You lose the game! \nFinal score: \nYou: ${humanScore} \nComputer: ${computerScore}`);
+        } else {
+            alert(`It's a tie! Final score: \nYou: ${humanScore} \nComputer: ${computerScore}`);
+        }
+    }
+    playGame();
+</script>
