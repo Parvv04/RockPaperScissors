@@ -1,58 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
-    <link rel="stylesheet" href="styles.css">
-</html>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #results {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
 </head>
-<script>
-    function getComputerChoice() {
-        const choices = ['rock', 'paper', 'scissors'];
-        const randomIndex = Math.floor(Math.random() * choices.length);
-        return choices[randomIndex];
-    }
-    function getHumanChoice() {
-        const choices = ['rock', 'paper', 'scissors'];
-        let choice;
-        do {
-            choice = prompt("Enter rock, paper, or scissors:").toLowerCase();
-        } while (!choices.includes(choice));
-        return choice;
-    }
+<body>
+  <h1>Rock Paper Scissors</h1>
+  <button id="rock">Rock</button>
+  <button id="paper">Paper</button>
+  <button id="scissors">Scissors</button>
+
+  <div id="results">
+    <p id="roundResult"></p>
+    <p id="score">Score — You: 0 | Computer: 0</p>
+    <p id="winner"></p>
+  </div>
+
+  <script>
+    const choices = ['rock', 'paper', 'scissors'];
     let humanScore = 0;
     let computerScore = 0;
+
+    const roundResult = document.getElementById('roundResult');
+    const scoreDisplay = document.getElementById('score');
+    const winnerDisplay = document.getElementById('winner');
+
+    function getComputerChoice() {
+      const randomIndex = Math.floor(Math.random() * choices.length);
+      return choices[randomIndex];
+    }
+
     function playRound(humanChoice, computerChoice) {
-        if (humanChoice === computerChoice) {
-            return 'Its a tie!';
-        } else if (
-            (humanChoice === 'rock' && computerChoice === 'scissors') ||
-            (humanChoice === 'paper' && computerChoice === 'rock') ||
-            (humanChoice === 'scissors' && computerChoice === 'paper')
-        ) {
-            humanScore++;
-            return `Computer Choice: ${computerChoice} \nYour Choice: ${humanChoice} \nYou win!`;
-        } else {
-            computerScore++;
-            return `Computer Choice: ${computerChoice} \nYour Choice: ${humanChoice} \nYou lose!`;
-        }
+      if (humanChoice === computerChoice) {
+        return "It's a tie!";
+      } else if (
+        (humanChoice === 'rock' && computerChoice === 'scissors') ||
+        (humanChoice === 'paper' && computerChoice === 'rock') ||
+        (humanChoice === 'scissors' && computerChoice === 'paper')
+      ) {
+        humanScore++;
+        return `You win! ${humanChoice} beats ${computerChoice}.`;
+      } else {
+        computerScore++;
+        return `You lose! ${computerChoice} beats ${humanChoice}.`;
+      }
     }
-    function playGame() {
-        const rounds = parseInt(prompt("How many rounds would you like to play?"));
-        for (let i = 0; i < rounds; i++) {
-            const humanChoice = getHumanChoice();
-            const computerChoice = getComputerChoice();
-            const result = playRound(humanChoice, computerChoice);
-            alert(result);
-        }
-        if (humanScore > computerScore) {
-            alert(`You win the game! \nFinal score: \nYou: ${humanScore} \nComputer: ${computerScore}`);
-        } else if (computerScore > humanScore) {
-            alert(`You lose the game! \nFinal score: \nYou: ${humanScore} \nComputer: ${computerScore}`);
-        } else {
-            alert(`It's a tie! Final score: \nYou: ${humanScore} \nComputer: ${computerScore}`);
-        }
+
+    function updateScore() {
+      scoreDisplay.textContent = `Score — You: ${humanScore} | Computer: ${computerScore}`;
     }
-    playGame();
-</script>
+
+    function checkWinner() {
+      if (humanScore === 5 || computerScore === 5) {
+        const finalWinner = humanScore === 5 ? "🎉 You win the game!" : "💀 You lose the game!";
+        winnerDisplay.textContent = finalWinner;
+
+        // Disable all buttons
+        document.querySelectorAll('button').forEach(button => button.disabled = true);
+      }
+    }
+
+    function handleClick(e) {
+      const humanChoice = e.target.id;
+      const computerChoice = getComputerChoice();
+      const result = playRound(humanChoice, computerChoice);
+      roundResult.textContent = `Computer chose ${computerChoice}. You chose ${humanChoice}. ${result}`;
+      updateScore();
+      checkWinner();
+    }
+
+    // Add event listeners to all buttons
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', handleClick);
+    });
+  </script>
+</body>
+</html>
