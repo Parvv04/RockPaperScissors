@@ -1,0 +1,67 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0f172a; /* dark slate */
+  color: #e5e7eb;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.container {
+  background: #020617;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  max-width: 400px;
+  width: 100%;
+}
+
+button {
+  background: #1e293b;
+  color: #e5e7eb;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+button:hover {
+  background: #334155;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#results {
+  margin-top: 20px;
+  padding: 15px;
+  background: #020617;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+}
+
+#roundResult {
+  margin-bottom: 10px;
+}
+
+#winner {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
